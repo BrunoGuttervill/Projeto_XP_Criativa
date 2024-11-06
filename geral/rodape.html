@@ -1,0 +1,67 @@
+<footer class="rodape-pagina">
+    <link rel="stylesheet" href="http://localhost/xp/Projeto_XpCriativa/estilo/estiloPagina.css">
+    <div class="container-menu">
+        <p>&copy; 2023 Hotelzin. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<!-- 
+Crud quarto =  /Adm/Quarto, COM FINAL EXE (BANCO + PHP), SEM EXE (formularios) TEM QUE LOGAR COMO ADM
+Crud TipoQuarto =  /Adm/TipoQuarto, COM FINAL EXE (BANCO + PHP), SEM EXE (formularios) TEM QUE LOGAR COMO ADM USUARIO ID 1 E 2
+Crud user = /UserCrud (php+banco) -----CadUser.php,AltUser.php,AltSenha.php (formularios)
+Crud Reserva = /reservaCrud--php (php+banco)--------CadReserva.php(formularios)
+
+#adcionar campo no banco
+#adcionar campo no formulario
+#InsertUser (***** mostram quais são importantes)
+require '../BD/ConectaDB.php';
+$conn = new mysqli($LOCALDB, $USER, $PASS, $DATABASE);
+
+//////INSERT /////////////////////////////////////////////////
+$sql= "INSERT INTO $DATABASE.TABELA (nome,cpf,email,telefone,data_nasc,sexo,senha,foto) VALUES 
+        ('$Nome','$Cpf','$Email','$Telefone','$Data','$Sexo',md5('$Senha'),NULL);"
+$result = $conn->query($sql);
+/////////////////////////////////////////////////////////////////////////
+
+
+#SelectUser
+
+//////////////////SELECT////////////////////////////////////////////////
+$sql = "SELECT * FROM ".$DATABASE.".usuario";
+$result = $conn->query($sql);
+if ($result->num_rows >0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "Seu nome é:". $row['nome']." ";
+        echo "Nasceu:". $row['data_nasc'];
+        echo "Time do coração é ".$row["Time"];
+        echo '<br>';
+
+    }
+}
+////////////////////////////////////////////////////////
+https://www.w3schools.com/html/html_form_input_types.asp     ------ tipos de input em html
+
+
+verificações:
+
+required       //obrigatorio
+
+texto:
+maxlength="15"  //tamanho máximo
+minlength="6"   //tamanho minimo
+
+number:
+min="1" ///valor
+max="5" //valor
+
+cpf:
+pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+
+data:
+pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+min="1920-01-01" 
+max="2023-06-06"
+
+senha:    numeros  minusculas maiusculas simbolos     tamanho
+pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&*]).{6,15}"  
+-->

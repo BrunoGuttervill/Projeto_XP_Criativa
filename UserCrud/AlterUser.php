@@ -1,0 +1,55 @@
+<?php 
+include '../geral/controle.php';
+
+if(isset($_POST['email'])&&$_POST['telefone']){
+    $Email = $_POST["email"];
+    $Telefone = $_POST["telefone"];
+
+}else{
+    redirect();
+}
+require '../BD/ConectaDB.php';
+$conn = new mysqli($LOCALDB, $USER, $PASS, $DATABASE);
+
+// Verifica conexão 
+if ($conn->connect_error) {
+    die("<strong> Falha de conexão: </strong>" . $conn->connect_error);
+}
+
+try{
+    $Login = $_SESSION['login'];
+
+    if ($_FILES['imagem']['size'] == 0) { 
+        $sql= "UPDATE $DATABASE.usuario 
+        SET email = '$Email', telefone = '$Telefone'
+        WHERE email = '$Login';";
+    } else {                             
+        $imagem = addslashes(file_get_contents($_FILES['imagem']['tmp_name'])); // Atribui a foto a uma variavel
+        $sql= "UPDATE $DATABASE.usuario 
+        SET email = '$Email', telefone = '$Telefone', foto = '$imagem'
+        WHERE email = '$Login';";
+    }
+
+    $result = $conn->query($sql);
+    $_SESSION ['login']       = $Email;           // Ativa as variáveis de sessão
+
+
+    ?>
+    <script language="javascript" type="text/javascript">
+        alert("Usuário alterado com Sucesso");
+        window.location.href = 'http://localhost/xp/Projeto_XpCriativa/';
+    </script>
+    <?php
+    //header('location: ../index.php');
+}
+catch(Exception $e) {
+    ?>
+    <script language="javascript" type="text/javascript">
+        alert("Erro ao alterar os dados");
+        window.location.href = 'http://localhost/xp/Projeto_XpCriativa/CadUser.php';
+    </script>
+    <?php
+}
+
+
+?>
